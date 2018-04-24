@@ -65,7 +65,7 @@ class ExpenseFieldsSeed extends AbstractSeed
               'created'=>date('Y-m-d H:i:s'),
               'modified'=>date('Y-m-d H:i:s')
             ],
-            [ 'name'=>'Others',
+            [ 'name'=>'ob_tidyhandler(input)s',
               'role_id'=>1,
               'created'=>date('Y-m-d H:i:s'),
               'modified'=>date('Y-m-d H:i:s')
