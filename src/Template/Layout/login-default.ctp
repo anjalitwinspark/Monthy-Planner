@@ -62,7 +62,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     
     <?= $this->Flash->render() ?>
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('http://localhost/Budget-Planner/img/bg-01.jpg');">
+        <div class="container-login100" style="background-image: url('http://localhost/budget-planner/img/bg-01.jpg');">
     
     <?= $this->fetch('content') ?>
     
