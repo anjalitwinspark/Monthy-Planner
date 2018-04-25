@@ -63,6 +63,11 @@ class IncomesTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
+        $validator
+            ->integer('value')
+            ->requirePresence('value', 'create')
+            ->notEmpty('value');
+
         return $validator;
     }
 

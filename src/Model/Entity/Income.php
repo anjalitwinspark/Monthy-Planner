@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property int $income_field_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property int $value
  *
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\IncomeField $income_field
@@ -32,6 +33,7 @@ class Income extends Entity
         'income_field_id' => true,
         'created' => true,
         'modified' => true,
+        'value' => true,
         'user' => true,
         'income_field' => true
     ];

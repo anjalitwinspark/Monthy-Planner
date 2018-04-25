@@ -33,13 +33,20 @@ class UsersController extends AppController
         $this->viewBuilder()->layout('login-default');
     if ($this->request->is('post')) {
         $user = $this->Auth->identify();
-
         if ($user) {
             $this->Auth->setUser($user);
-            return $this->redirect($this->Auth->redirectUrl(['controller'=>'Users','action'=>'index']));
+            return $this->redirect($this->Auth->redirectUrl(['controller'=>'Users', 'action'=>'index']));
         }
         $this->Flash->error('Your username or password is incorrect.');
        }
+    }
+    public function register()
+    {
+        if($this->request->is('post')){
+            $user = $this->Auth->identify();
+
+        }
+
     }
 
     /**
@@ -66,14 +73,12 @@ class UsersController extends AppController
     public function add()
     {
         $user = $this->Users->newEntity();
-        
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['controller'=>'Users','action' => 'login']);
+                return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
