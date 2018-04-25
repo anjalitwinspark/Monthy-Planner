@@ -6,6 +6,7 @@
 <?= $this->Form->end() ?>
 
 -->
+<?= $this->Form->create() ?>
 			<div class="wrap-login100">
 				<form class="login100-form validate-form">
 					<span class="login100-form-logo">
@@ -16,22 +17,33 @@
 						Log in
 					</span>
 
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+					<!--<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<input class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
+					-->	
 
+					<?= $this->Form->control(('email'), ['class'=>'wrap-input100','validate-input', 'focus-input100']) ?>
+
+					<!--
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
 						<input class="input100" type="password" name="pass" placeholder="Password">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
+					-->
 
+					<?= $this->Form->control(('password'), ['class'=>'wrap-input100','validate-input']) ?>
+
+					<!--
 					<div class="contact100-form-checkbox">
 						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
 						<label class="label-checkbox100" for="ckb1">
 							Remember me
 						</label>
 					</div>
+					-->	
+
+
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
@@ -48,3 +60,4 @@
 			</div>
 		</div>
 	</div>
+	<?= $this->Form->end() ?>
