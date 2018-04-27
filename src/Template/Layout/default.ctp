@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Budget-Planner';
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,29 +34,30 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
+    <?= $this->Html->css(['Inspinia/css/bootstrap.min.css','Inspinia/font-awesome/css/font-awesome.css','Inspinia/css/plugins/iCheck/custom.css','Inspinia/css/plugins/chosen/chosen.css','Inspinia/css/plugins/chosen/chosen.css','Inspinia/css/plugins/colorpicker/bootstrap-colorpicker.min.css','Inspinia/css/plugins/cropper/cropper.min.css','Inspinia/css/plugins/switchery/switchery.css','Inspinia/css/plugins/jasny/jasny-bootstrap.min.css','Inspinia/css/plugins/nouslider/jquery.nouislider.css','Inspinia/css/plugins/datapicker/datepicker3.css','Inspinia/css/plugins/ionRangeSlider/ion.rangeSlider.css','Inspinia/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css','Inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css','Inspinia/css/plugins/clockpicker/clockpicker.css','Inspinia/css/plugins/daterangepicker/daterangepicker-bs3.css','Inspinia/css/plugins/select2/select2.min.css','Inspinia/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css','Inspinia/css/animate.css','Inspinia/css/style.css']) ?>
+    <?= $this->Html->script(['Inspinia/js/jquery-2.1.1.js','Inspinia/js/bootstrap.min.js','Inspinia/js/inspinia.js','Inspinia/js/plugins/pace/pace.min.js','Inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js','Inspinia/js/plugins/chosen/chosen.jquery.js','Inspinia/js/plugins/jsKnob/jquery.knob.js','Inspinia/js/plugins/jasny/jasny-bootstrap.min.js','Inspinia/js/plugins/datapicker/bootstrap-datepicker.js','Inspinia/js/plugins/nouslider/jquery.nouislider.min.js','Inspinia/js/plugins/switchery/switchery.js','Inspinia/js/plugins/ionRangeSlider/ion.rangeSlider.min.js','Inspinia/js/plugins/iCheck/icheck.min.js','Inspinia/js/plugins/metisMenu/jquery.metisMenu.js','Inspinia/js/plugins/colorpicker/bootstrap-colorpicker.min.js','Inspinia/js/plugins/daterangepicker/daterangepicker.js','Inspinia/js/plugins/select2/select2.full.min.js','Inspinia/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js']) ?>
+
+    <?= $this->Html->css('style.css') ?>
+
+
+
+
 </head>
-<body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
+<body class="pace-done">
+    <div id="wrapper">
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
+
+     <?= $this->element('top-nav') ?>        
+     <?= $this->element('side-nav') ?>
+
+
+    <div  id="page-wrapper" class="gray-bg" stlye="min-height: 480px;">
         <?= $this->fetch('content') ?>
     </div>
     <footer>
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    </div>
 </body>
 </html>
