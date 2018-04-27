@@ -83,9 +83,9 @@ class ExpensesTable extends Table
             ->notEmpty('recurring');
 
         $validator
-            ->integer('recurring_duration')
-            ->requirePresence('recurring_duration', 'create')
-            ->notEmpty('recurring_duration');
+            ->integer('recurring_duration');
+        //    ->requirePresence('recurring_duration', 'create')
+        //    ->notEmpty('recurring_duration');
 
         return $validator;
     }
