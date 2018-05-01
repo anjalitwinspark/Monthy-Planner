@@ -37,8 +37,7 @@ class UsersController extends AppController
 
         if ($user) {
             $this->Auth->setUser($user);
-            
-            return $this->redirect($this->Auth->redirectUrl(['controller'=>'Users', 'action'=>'index']));
+            return $this->redirect($this->Auth->redirectUrl(['controller'=>'Expenses', 'action'=>'index']));
         }
         $this->Flash->error('Your username or password is incorrect.');
        }
@@ -51,6 +50,28 @@ class UsersController extends AppController
         }
 
     }
+    // public function isAuthorized($user){
+        
+    //    return true;
+    
+    // }
+    public function initialize()
+{
+    parent::initialize();
+    if($this->Auth->user()){
+    $this->Auth->allow(['logout']);
+
+    }else{
+    $this->Auth->allow(['add']);
+
+    }
+}
+
+public function logout()
+{
+    $this->Flash->success('You are now logged out.');
+    return $this->redirect($this->Auth->logout());
+}
 
     /**
      * View method

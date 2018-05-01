@@ -106,18 +106,12 @@
                         </li>
                     </ul>
                 </li>
-
-
                 <li>
-                    <a href="login.html">
-                        <i class="fa fa-sign-out"></i> Log out
-                    </a>
+                    
+                    <?= $this->Html->link(__('Log Out'), ['controller' => 'Users', 'action' => 'logout']) ?>
+                    
                 </li>
-                <li>
-                    <a class="right-sidebar-toggle">
-                        <i class="fa fa-tasks"></i>
-                    </a>
-                </li>
+
+     
             </ul>
-
         </nav>

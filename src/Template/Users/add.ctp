@@ -83,7 +83,7 @@
                 </div>
 
                 <div>
-                <label> <input checked="" value="1" id="optionsRadios1" name="role_id" type="radio"> User </label>
+                <label> <input checked="true" value="1" id="optionsRadios1" name="role_id" type="radio"> User </label>
                 <label> <input checked="" value="2" id="optionsRadios2" name="role_id" type="radio"> Company </label>
                 </div>
 

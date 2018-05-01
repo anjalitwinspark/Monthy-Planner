@@ -20,12 +20,36 @@ class ExpensesController extends AppController
      */
     public function index()
     {
+        $this->loadModel('Incomes');
+
         $this->paginate = [
             'contain' => ['Users', 'ExpenseFields']
         ];
-        $expenses = $this->paginate($this->Expenses);
+        $expenses = $this->paginate($this->Expenses
+        ->find()
+        ->where(['user_id ' => $this->Auth->user('id')])
+        ->order(['Expenses.created' => 'DESC'])
+        );
+
+        //to calculate sum
+        $query = $this->Expenses->find();
+     
+        $monthlyExpense=$query
+        ->select(['sum' => $query->func()->sum('Expenses.value')])
+        ->where(['user_id ' => $this->Auth->user('id')])
+        ->toList();
+        
+        $income = $this->Incomes->find();
+     
+        $monthlyIncome=$income
+        ->select(['sum' => $income->func()->sum('Incomes.value')])
+        ->where(['user_id ' => $this->Auth->user('id')])
+        ->toList();
+        // pr($monthlyIncome);die;
 
         $this->set(compact('expenses'));
+        $this->set('monthlyIncome',$monthlyIncome);
+        $this->set('monthlyExpense',$monthlyExpense);
     }
 
     /**
@@ -52,8 +76,16 @@ class ExpensesController extends AppController
     public function add()
     {
         $expense = $this->Expenses->newEntity();
+        $expense['user_id']=$this->Auth->user('id');
+        
+
+
+
         if ($this->request->is('post')) {
+            $expense['recurring_duration']=1;
             $expense = $this->Expenses->patchEntity($expense, $this->request->getData());
+            
+            
             if ($this->Expenses->save($expense)) {
                 $this->Flash->success(__('The expense has been saved.'));
 
@@ -62,7 +94,16 @@ class ExpensesController extends AppController
             $this->Flash->error(__('The expense could not be saved. Please, try again.'));
         }
         $users = $this->Expenses->Users->find('list', ['limit' => 200]);
-        $expenseFields = $this->Expenses->ExpenseFields->find('list', ['limit' => 200]);
+
+        if ($this->Auth->user('role_id') == 2 ) {
+            $expenseFields = $this->Expenses->ExpenseFields->find('list', ['limit' => 200]);
+        }
+        else{
+            $expenseFields = $this->Expenses->ExpenseFields->find('list')->where(['role_id =' => 1]);
+        }
+        
+
+       // $expenseFields = $this->Expenses->ExpenseFields->find('list', ['limit' => 200]);
         $this->set(compact('expense', 'users', 'expenseFields'));
     }
 
@@ -110,5 +151,10 @@ class ExpensesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    public function isAuthorized($user){
+        
+       return true;
+    
     }
 }

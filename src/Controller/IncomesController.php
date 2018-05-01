@@ -27,6 +27,11 @@ class IncomesController extends AppController
 
         $this->set(compact('incomes'));
     }
+    public function isAuthorized($user){
+        
+       return true;
+    
+    }
 
     /**
      * View method
@@ -82,7 +87,7 @@ class IncomesController extends AppController
             if ($this->Incomes->saveMany($income)) {
                 $this->Flash->success(__('The income has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller'=>'Expenses','action' => 'index']);
             }
             $this->Flash->error(__('The income could not be saved. Please, try again.'));
         }
