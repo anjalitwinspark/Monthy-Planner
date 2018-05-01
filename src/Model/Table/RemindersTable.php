@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Reminders Model
  *
  * @property \App\Model\Table\ExpensesTable|\Cake\ORM\Association\BelongsTo $Expenses
+ * @property |\Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\Reminder get($primaryKey, $options = [])
  * @method \App\Model\Entity\Reminder newEntity($data = null, array $options = [])
@@ -44,6 +45,10 @@ class RemindersTable extends Table
             'foreignKey' => 'expense_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -59,9 +64,15 @@ class RemindersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->dateTime('date')
+            ->date('date')
             ->requirePresence('date', 'create')
             ->notEmpty('date');
+
+        $validator
+            ->scalar('description')
+            ->maxLength('description', 255)
+            ->requirePresence('description', 'create')
+            ->notEmpty('description');
 
         return $validator;
     }
@@ -76,6 +87,7 @@ class RemindersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['expense_id'], 'Expenses'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
     }

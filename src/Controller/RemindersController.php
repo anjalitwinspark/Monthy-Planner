@@ -52,15 +52,15 @@ class RemindersController extends AppController
     public function add()
     {
         $reminder = $this->Reminders->newEntity();
-        $reminder['user_id'] = $this->Auth->user('id');
 
+        $reminder['user_id']=$this->Auth->user('id');
         if ($this->request->is('post')) {
             $reminder = $this->Reminders->patchEntity($reminder, $this->request->getData());
-        //pr($reminder);die;
             if ($this->Reminders->save($reminder)) {
                 $this->Flash->success(__('The reminder has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller'=>'Expenses','action' => 'index']);
+
             }
             $this->Flash->error(__('The reminder could not be saved. Please, try again.'));
         }
@@ -110,7 +110,8 @@ class RemindersController extends AppController
             $this->Flash->error(__('The reminder could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+
+        return $this->redirect(['controller'=>'Expenses','action' => 'index']);
     }
     public function isAuthorized($user){
         

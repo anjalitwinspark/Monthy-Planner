@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property int $user_id
  * @property int $expense_field_id
  * @property int $value
+ * @property \Cake\I18n\FrozenDate $date
  * @property string $description
  * @property bool $recurring
  * @property int $recurring_duration
@@ -36,6 +37,7 @@ class Expense extends Entity
         'user_id' => true,
         'expense_field_id' => true,
         'value' => true,
+        'date' => true,
         'description' => true,
         'recurring' => true,
         'recurring_duration' => true,

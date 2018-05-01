@@ -25,6 +25,7 @@
         <?php
             echo $this->Form->control('expense_id', ['options' => $expenses]);
             echo $this->Form->control('date');
+            echo $this->Form->control('description');
             echo $this->Form->control('user_id');
         ?>
     </fieldset>

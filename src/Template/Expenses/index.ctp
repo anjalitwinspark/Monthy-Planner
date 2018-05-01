@@ -18,47 +18,221 @@
         <div class="wrapper wrapper-content animated fadeInRight">
 
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-content">
-                              
+                <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Expense Chart <small></small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-bar-chart" style="padding: 0px; position: relative;">
+                                    <canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 456px; height: 200px;" width="456" height="200"></canvas>
+                                    <div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+                                        <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                </div>
 
+                <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Expense Line Chart</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="flot-chart">
+                            <div class="flot-chart-content" id="flot-line-chart" style="padding: 0px; position: relative;">
+                                
+                                </div>
                         </div>
                     </div>
                 </div>
-                
+            </div>
+
+            </div>
+            
+
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-success pull-right">Monthly</span>
+                                <h5>Expense</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">
+
+                                    <?= $monthlyExpense; ?>
+                                </h1>
+                                
+                                <small>Total expense: <strong><?= $totalExpense; ?></strong></small>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-success pull-right">Monthly</span>
+                                <h5>Income</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">
+
+                                    <?= $monthlyIncome[0]->sum; ?>
+                                </h1>
+                                
+                                <small>Total income</small>
+                            </div>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-warning pull-right">Annual</span>
+                                <h5>Income</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins"><?= ($monthlyIncome[0]->sum)*12; ?></h1>
+                                
+                                <small></small>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Reminder</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="text-center">
+                            <a data-toggle="modal" class="btn btn-primary" href="#modal-form"><i class="fa fa-bell"></i> ADD REMINDER </a>
+
+                            <?= $this->Form->postButton('Check Reminder', ['controller'=>'Expenses','action' => 'check'],['class'=>'btn btn-warning']) ?>
+
+                            </div>
+                            <div id="modal-form" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                </div>
+                                                
+                                                <div class="col-lg-8">
+                                                    
+                                                    <h3 class="m-t-none m-b">Reminder
+                                                    </h3>
+
+                                                    
+                                                    <?= $this->Form->create(null, ['url' => ['controller'=>'reminders','action' => 'add']]) ?>
+                                                    <form role="form">
+                                                        <div class="form-group">
+                                                        <select class="form-control" style="width:375px;"name="expense_id">
+                                                        <?php
+                                                            foreach ($expenses as $value) {
+                                                            echo '<option name="expense_id" value="'.$value->id.'">'.$value->description.'
+                                                                    </option>';
+                                                                }
+                                                                ?>
+                                                        </select></div>
+                                                        
+                                                        <div class="form-group">
+                                                            
+                                                            <label >Reminder
+                                                            </label> 
+                                                            
+                                                            <input type="text" name="description" placeholder="Enter Reminder" class="form-control">
+                                                            
+                                                        </div>
+
+                                                        <br>
+                                                        <div class="form-group" >
+                                <label class="font-noraml">Date</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="date" name="date" class="form-control" value="30/04/2018">
+                                </div>
+                            </div>
+                                                        <div>
+                                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                                                <strong>Save</strong></button>
+
+                                                        </div>
+                                                    </form>
+                                                    <?= $this->Form->end() ?>
+                                                    
+                                                </div>
+
+                                                
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Expenses</h5>
+                            
                             <div class="ibox-tools">
-                                        <a class="collapse-link">
-                                            <i class="fa fa-chevron-up"></i>
-                                        </a>
-                                        
-                                        <a class="close-link">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                    </div>
+                                <span class="label label-warning">
+                                <h5>Expense</h5></span>
+                                <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                                    </a>
+                            <!--    <a class="close-link">
+                                <i class="fa fa-times"></i>
+                                </a>-->
+                            </div>
+
                         </div>
                      
 
                         <div class="ibox-content">
-                        <div class="expenses index large-9 medium-8 columns content">
+                        
                             <div class="feed-activity-list">
-                                <!--    <h3><?= __('Expenses') ?></h3>-->
+                                
                                 <?php foreach ($expenses as $expense): ?>
-                                <div class="feed-element">
+                                <div class="feed-element ">
                                     <large class="pull-right text-navy">
-                                        <?= $this->Html->link(__('View'), ['action' => 'view', $expense->id]) ?>
-                                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $expense->id]) ?>
-                                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $expense->id], ['confirm' => __('Are you sure you want to delete # {0}?', $expense->id)]) ?>
+                                        <?= $this->Html->link(__('View'), ['controller'=>'Expenses','action' => 'view', $expense->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller'=>'Expenses','action' => 'edit', $expense->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller'=>'Expenses','action' => 'delete', $expense->id], ['confirm' => __('Are you sure you want to delete # {0}?', $expense->id)]) ?>
                                     </large>
-                                            
-                                    <strong><?= $expense->has('expense_field') ? $this->Html->link($expense->expense_field->name, ['controller' => 'ExpenseFields', 'action' => 'view', $expense->expense_field->id]) : '' ?>
+                                
+
+                                    <strong class=""><?= h($expense->expense_field->name)//$expense->has('expense_field') ? $this->Html->link($expense->expense_field->name, ['controller' => 'ExpenseFields', 'action' => 'view', $expense->expense_field->id]) : '' ?>
                                     </strong>
 
                                     <br>
@@ -82,57 +256,109 @@
                                     <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
                                 </div>
                             </div>
-                        </div>
+                        
                         </div>
                     </div>
 
                 </div>
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                                <span class="label label-success pull-right">Monthly</span>
-                                <h5>Expense</h5>
-                        </div>
+                            <div class="ibox-title">
+                                        
+                                        <div class="ibox-tools">
+                                            <span class="label label-info">
+                                            <h5>Income</h5></span>
+                                            <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                        <!--    <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                            </a>-->
+                                        </div>
+                            </div>
                         <div class="ibox-content">
-                                <h1 class="no-margins">
+    
+                            <div class="feed-activity-list">
+                                                <?php foreach ($incomes as $income): ?>
 
-                                    <?= $monthlyExpense[0]->sum; ?>
-                                </h1>
-                                
-                                <small>Total expense</small>
+                                                <div class="feed-element">
+                                                    
+                                                    
+                                                        <small class="pull-right">
+                                                            <?= $this->Html->link(__('View'), ['controller'=>'Incomes','action' => 'view', $income->id]) ?>
+                                                            <?= $this->Html->link(__('Edit'), ['controller'=>'Incomes','action' => 'edit', $income->id]) ?>
+                    
+                                                            <?= $this->Form->postLink(__('Delete'), ['controller'=>'Incomes','action' => 'delete', $income->id], ['confirm' => __('Are you sure you want to delete # {0}?', $income->id)]) ?>
+                                                        </small>
+
+                                                        <strong><?= $income->income_field->name ?></strong> <?= h($income->value)?> <br>
+                                                        <small class="text-muted">
+                                                            <?= h($income->created)?>
+                                                        </small>
+
+                                                    
+                                                </div>
+                                                <?php endforeach; ?>
+
+                            </div>
+                                    
                         </div>
                     </div>
-                    <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <span class="label label-success pull-right">Monthly</span>
-                                <h5>Income</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins">
 
-                                    <?= $monthlyIncome[0]->sum; ?>
-                                </h1>
-                                
-                                <small>Total income</small>
-                            </div>
-                    </div>
-                    <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <span class="label label-warning pull-right">Annual</span>
-                                <h5>Income</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins"><?= ($monthlyIncome[0]->sum)*12; ?></h1>
-                                
-                                <small>New orders</small>
-                            </div>
-                    </div>
                 </div>
                 
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                        
+                                        <div class="ibox-tools">
+                                            <span class="label label-danger">
+                                            <h5>Reminder</h5></span>
+                                            <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                        <!--    <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                            </a>-->
+                                        </div>
+                            </div>
+                        <div class="ibox-content">
+    
+                            <div class="feed-activity-list">
+                                                <?php foreach ($reminders as $reminder): ?>
+
+                                                <div class="feed-element">
+                                                    
+                                                    
+                                                        <small class="pull-right">
+                                                        <!--    <i class="fa fa-eye">
+                                                            <?= $this->Html->link(__('View'), ['controller'=>'Reminders','action' => 'view', $reminder->id]) ?>
+                                                        </i>-->
+                                                            <i class="fa fa-edit">
+                                                            <?= $this->Html->link(__('Edit'), ['controller'=>'Reminders','action' => 'edit', $reminder->id]) ?>
+                                                            </i>
+                    
+                                                            <?= $this->Form->postButton('<i class="fa fa-times"></i>', ['controller'=>'Reminders','action' => 'delete', $reminder->id], ['confirm' => __('Are you sure you want to delete # {0}?', $reminder->id)]) ?>
+                                                        </small>
+
+                                                        <strong><?= $reminder->description ?></strong>  
+                                                        <br>
+                                                        <small class="text-muted">
+                                                            <?= h($reminder->date)?>
+                                                        </small>
+
+                                                    
+                                                </div>
+                                                <?php endforeach; ?>
+
+                            </div>
+                                    
+                        </div>
+                    </div>
+
+                </div>
+      
             </div>
-
-
-            
 
             
         </div>
