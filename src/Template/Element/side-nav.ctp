@@ -1,34 +1,22 @@
-<nav class="navbar-default navbar-static-side" role="navigation" >
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu" style="display: inline-flex;">
-                <li class="nav-header">
-                    <div class="dropdown profile-element"> 
-                        <span>
+<nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> 
+                            <span>
+                            <img alt="image" class="img-circle" style="width:150px;height:100px;border-radius: 10%;" src="img/logo.jpg">
+                             </span>
                             
-                        </span>
-                        <a data-toggle="dropdown"  href="#">
-                            <span class="clear">
-                             <span class="block m-t-xs">
-                             <strong class="font-bold">Budget Planner
-                             </strong>
-                             </span>  
-                            </span> 
-                        </a>
-                        
-                    </div>
-                    <div class="logo-element">
-                        IN+
-                    </div>
-                </li>
-                <li>
-                    <ul class="nav nav-second-level collapse in" style="">
+                        </div>
+                        <div class="logo-element">
+                            IN+
+                        </div>
+                    </li>
+                    
+                            
+                    <li><?= $this->Html->link(__('Add Expenses'), ['controller'=>'Expenses','action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Add Income'), ['controller'=>'Incomes','action' => 'add']) ?></li>
+                </ul>
+            </div>
+</nav>
 
-                        <li><?= $this->Html->link(__('Add Expenses'), ['controller'=>'Expenses','action' => 'add']) ?></li>
-                        <li><?= $this->Html->link(__('Add Income'), ['controller'=>'Incomes','action' => 'add']) ?></li>
-                        
-                    </ul>
-                </li>
-                
-            </ul>
-        </div>
-    </nav>

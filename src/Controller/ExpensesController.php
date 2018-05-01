@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Collection\Collection;
 
 /**
  * Expenses Controller
@@ -21,6 +22,10 @@ class ExpensesController extends AppController
     public function index()
     {
         $this->loadModel('Incomes');
+        $this->loadModel('Expenses');
+        $this->loadModel('Reminders');
+       
+        
 
         $this->paginate = [
             'contain' => ['Users', 'ExpenseFields']
@@ -31,13 +36,108 @@ class ExpensesController extends AppController
         ->order(['Expenses.created' => 'DESC'])
         );
 
-        //to calculate sum
-        $query = $this->Expenses->find();
-     
-        $monthlyExpense=$query
-        ->select(['sum' => $query->func()->sum('Expenses.value')])
+        $incomes =$this->Incomes
+        ->find()
+        ->contain('IncomeFields')
         ->where(['user_id ' => $this->Auth->user('id')])
-        ->toList();
+        ->order(['Incomes.created' => 'DESC'])
+        ->all()
+        ;
+        $reminders =$this->Reminders
+        ->find()
+        ->contain('Expenses')
+        ->where(['Reminders.user_id ' => $this->Auth->user('id')])
+        ->order(['Reminders.created' => 'DESC'])
+        ->all()
+        ;
+        //reminder
+        $reminderToday=[];
+        $i=0;
+        if($reminders){
+            foreach ($reminders as $reminder) {
+            $time =$reminder->date;
+        
+            if ($time->isToday()) {
+                $reminderToday[]=$reminder;
+                $i=$i+1;
+
+                }
+           
+            }
+            $this->set('i',$i);
+            $this->set('reminderToday',$reminderToday);
+        }
+        //Expense Graph Month
+        if($expenses){
+        $collection = new Collection($expenses);
+        $newCollection = $collection->map(function($value, $key){
+     
+            return  ['month' => $value->date->month, 'value' => $value->value];   
+        });
+
+        $new=$newCollection->groupBy('month')->map(function($value, $key){
+            $value1 = (new Collection($value))->reduce(function($accumulated, $line){
+                return $accumulated + $line['value'];
+            },0);
+            return $value1;
+        });
+        $coordinates=$new->map(function($value, $key){
+            return [$key,$value];
+        });
+        $coordinates=$coordinates->toList();
+        $this->set('coordinates',$coordinates);
+
+    }
+
+        
+
+        //Expense graph
+        $currentExpenses=[];
+        foreach ($expenses as $expense) {
+            # code...
+            if($expense->date->isThisMonth()){
+            $currentExpenses[]=$expense;
+            }
+            
+        }
+
+        if($currentExpenses){
+        $collection = new Collection($currentExpenses);
+        $newCollection = $collection->map(function($value, $key){
+     
+            return  ['day' => $value->date->day, 'value' => $value->value];   
+        });
+
+        $new=$newCollection->groupBy('day')->map(function($value, $key){
+            $value1 = (new Collection($value))->reduce(function($accumulated, $line){
+                return $accumulated + $line['value'];
+            },0);
+            return $value1;
+        });
+        $coordinatesDay=$new->map(function($value, $key){
+            return [$key,$value];
+        });
+        $coordinatesDay=$coordinatesDay->toList();
+        //pr($coordinatesDay);die;
+        $this->set('coordinatesDay',$coordinatesDay);
+
+        }
+        
+        
+
+        
+        //to calculate sum
+        $collectionSum = new Collection($currentExpenses);
+        $collectionSumAll = new Collection($expenses);
+        $monthlyExpense=$collectionSum->sumOf('value');
+        $totalExpense=$collectionSumAll->sumOf('value');
+        
+        // $query = $this->Expenses->find();
+     
+        // $monthlyExpense=$query
+        // ->select(['sum' => $query->func()->sum('Expenses.value')])
+        // ->where(['user_id ' => $this->Auth->user('id')])
+        // ->toList();
         
         $income = $this->Incomes->find();
      
@@ -45,11 +145,36 @@ class ExpensesController extends AppController
         ->select(['sum' => $income->func()->sum('Incomes.value')])
         ->where(['user_id ' => $this->Auth->user('id')])
         ->toList();
-        // pr($monthlyIncome);die;
-
+        
+        $this->set(compact('reminders'));
         $this->set(compact('expenses'));
+        $this->set(compact('incomes'));
         $this->set('monthlyIncome',$monthlyIncome);
         $this->set('monthlyExpense',$monthlyExpense);
+        $this->set('totalExpense',$totalExpense);
+        
+       
+    }
+
+    public function check(){
+        $this->loadModel('Reminders');
+        
+        $x=$this->Reminders->find()
+        ->where(['Reminders.user_id ' => $this->Auth->user('id')])
+        ->all();
+        foreach ($x as $reminder) {
+        $time =$reminder->date;
+        if ($time->isToday()) {
+            $y[]=$reminder;
+            // Greet user with a happy birthday message
+            $this->Flash->success(__($reminder->description));
+
+            }
+           
+        }
+
+        $this->set('y',$y);
+        return $this->redirect(['action' => 'index']);
     }
 
     /**

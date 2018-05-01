@@ -1,11 +1,44 @@
+<!--<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Income $income
+ */
+?>
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('List Incomes'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Income Fields'), ['controller' => 'IncomeFields', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Income Field'), ['controller' => 'IncomeFields', 'action' => 'add']) ?></li>
+    </ul>
+</nav>
+<div class="incomes form large-9 medium-8 columns content">
+    <?= $this->Form->create($income) ?>
+    <fieldset>
+        <legend><?= __('Add Income') ?></legend>
+        <?php
+            echo $this->Form->control('user_id', ['options' => $users]);
+            echo $this->Form->control('income_field_id', ['options' => $incomeFields]);
+            echo $this->Form->control('value');
+        ?>
+    </fieldset>
+    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->end() ?>
+</div>
+-->
 
+<div id="wrapper">
 
+    <?= $this->element('side-nav') ?>
 
+    
+    <div id="page-wrapper" class="gray-bg dashbard-1" >
 
-<div id="page-wrapper" class="gray-bg dashboard">
+        
 
-
-<div class="wrapper wrapper-content animated fadeInRight">
+        <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="incomes form content col-lg-12">
                     <div class="ibox float-e-margins">
@@ -36,8 +69,8 @@
                         <?= $this->Form->create(($income),['class'=>'form-horizontal']) ?>
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">
-                                        
+                                    <label class="col-sm-2 control-label">
+                                        Income
                                     </label>
 
                                     <div class="col-sm-10" id="select">
@@ -61,15 +94,21 @@
                                     </div>
                                 </div>
                                 
-                                <div id='content'>
-                                     <input type="button" id="more_fields" onclick="add_fields();" value="Add More" />
-                                </div>
-
+                                
                             
                         <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
                                         
                                         <button class="btn btn-primary" type="submit">Save</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2" id='content'>
+                                       
+                                     <input type="button" id="more_fields" onclick="add_fields();" value="Add More" />
+                                
+ 
+                                        
                                     </div>
                                 </div>
 
@@ -78,11 +117,11 @@
                     </div>
                 </div>
             </div>
-</div>
+ </div>
 
 </div>
 
-
+</div>
 <script>
 var count = 1;
 function add_fields() {

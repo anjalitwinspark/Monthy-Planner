@@ -23,6 +23,12 @@
             <td><?= $reminder->has('expense') ? $this->Html->link($reminder->expense->id, ['controller' => 'Expenses', 'action' => 'view', $reminder->expense->id]) : '' ?></td>
         </tr>
         <tr>
+
+            <th scope="row"><?= __('Description') ?></th>
+            <td><?= h($reminder->description) ?></td>
+        </tr>
+        <tr>
+
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($reminder->id) ?></td>
         </tr>

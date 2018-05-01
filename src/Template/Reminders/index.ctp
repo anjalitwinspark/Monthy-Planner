@@ -22,6 +22,7 @@
                 <th scope="col"><?= $this->Paginator->sort('date') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('description') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -34,6 +35,7 @@
                 <td><?= h($reminder->date) ?></td>
                 <td><?= h($reminder->created) ?></td>
                 <td><?= h($reminder->modified) ?></td>
+                <td><?= h($reminder->description) ?></td>
                 <td><?= $this->Number->format($reminder->user_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $reminder->id]) ?>
