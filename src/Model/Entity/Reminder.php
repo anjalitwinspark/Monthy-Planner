@@ -8,9 +8,11 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $expense_id
- * @property \Cake\I18n\FrozenTime $date
+ * @property \Cake\I18n\FrozenDate $date
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string $description
+ * @property int $user_id
  *
  * @property \App\Model\Entity\Expense $expense
  */
@@ -31,6 +33,8 @@ class Reminder extends Entity
         'date' => true,
         'created' => true,
         'modified' => true,
+        'description' => true,
+        'user_id' => true,
         'expense' => true
     ];
 }

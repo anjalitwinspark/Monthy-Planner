@@ -5,7 +5,7 @@
  */
 ?>
 
-div id="wrapper">
+<div id="wrapper">
 
     <?= $this->element('side-nav') ?>
 

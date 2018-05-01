@@ -31,7 +31,7 @@
     
     <div id="page-wrapper" class="gray-bg dashbard-1" >
 
-        <?= $this->element('top-nav') ?>
+        
 
         <div class="wrapper wrapper-content animated fadeInRight">
        
@@ -88,6 +88,13 @@
                                         <input class="form-control" name="description" type="text">
                                     </div>
                                 </div>
+                                <div class="form-group" >
+                                    <label class="col-sm-2 control-label">Date</label>
+                                    <div class="input-group date col-sm-10" style="width:385px;">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="date" name="date" class="form-control" value="30/04/2018">
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     
                                    <label class="col-sm-2 control-label">Recurring</label>

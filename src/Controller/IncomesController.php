@@ -54,12 +54,53 @@ class IncomesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
+    // public function add()
+    // {
+    //     $income = $this->Incomes->newEntity();
+    //     if ($this->request->is('post')) {
+    //         $income = $this->Incomes->patchEntity($income, $this->request->getData());
+    //         if ($this->Incomes->save($income)) {
+    //             $this->Flash->success(__('The income has been saved.'));
+
+    //             return $this->redirect(['controller'=>'Expenses','action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('The income could not be saved. Please, try again.'));
+    //     }
+    //     $users = $this->Incomes->Users->find('list', ['limit' => 200]);
+    //     $incomeFields = $this->Incomes->IncomeFields->find('list', ['limit' => 200]);
+    //     $this->set(compact('income', 'users', 'incomeFields'));
+    // }
     public function add()
     {
         $income = $this->Incomes->newEntity();
+        $income['user_id'] = $this->Auth->user('id');
+        $role = $this->Auth->user('role_id');
+        
+       // $data= [
+       //      [
+       //          'income_field_id' => 2,
+       //          'value' => 'tyu'
+       //      ],
+       //      [
+       //          'income_field_id' => 1,
+       //          'value' => 'dfghj'
+       //      ]
+       //  ];
+// pr($data); die;
+
+       //pr($this->Auth->user('role_id'));die;
         if ($this->request->is('post')) {
-            $income = $this->Incomes->patchEntity($income, $this->request->getData());
-            if ($this->Incomes->save($income)) {
+         $data = $this->request->getData();
+         $data = $data['data'];  //converting array to patchEntity format
+         $newData= [];
+         foreach ($data as $value) {
+            $value['user_id'] = $this->Auth->user('id');
+            $newData[] = $value;
+         }
+//pr($newData); die;
+            $income = $this->Incomes->patchEntities($income, $newData);
+
+            if ($this->Incomes->saveMany($income)) {
                 $this->Flash->success(__('The income has been saved.'));
 
                 return $this->redirect(['controller'=>'Expenses','action' => 'index']);
@@ -67,7 +108,13 @@ class IncomesController extends AppController
             $this->Flash->error(__('The income could not be saved. Please, try again.'));
         }
         $users = $this->Incomes->Users->find('list', ['limit' => 200]);
-        $incomeFields = $this->Incomes->IncomeFields->find('list', ['limit' => 200]);
+        if ($this->Auth->user('role_id') == 2 ) {
+            $incomeFields = $this->Incomes->IncomeFields->find()->all();
+        }
+        else{
+            $incomeFields = $this->Incomes->IncomeFields->find()->where(['role_id =' => 1])->all();
+        }
+        //$incomeFields = $this->Incomes->IncomeFields->find('list', ['limit' => 200]);
         $this->set(compact('income', 'users', 'incomeFields'));
     }
 
@@ -88,7 +135,7 @@ class IncomesController extends AppController
             if ($this->Incomes->save($income)) {
                 $this->Flash->success(__('The income has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller'=>'Expenses','action' => 'index']);
             }
             $this->Flash->error(__('The income could not be saved. Please, try again.'));
         }
@@ -114,6 +161,6 @@ class IncomesController extends AppController
             $this->Flash->error(__('The income could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller'=>'Expenses','action' => 'index']);
     }
 }
