@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Collection\Collection;
 use Cake\I18\Time;
+use Cake\ORM\Table;
 
 /**
  * Expenses Controller
@@ -226,9 +227,13 @@ public function recurring(){
             if($expense['date']->wasWithinLast('1 month')){
                 if($expense->recurring&&$expense['recurring_duration']!=0){
 
-
+                    $updateExpense=$expense;
+                    $updateExpense->recurring=false;
+                    $this->Expenses->save($updateExpense);
+                    
                     $expense['date']=$expense['date']->addMonth(1);
                     $expense['recurring_duration']=$expense['recurring_duration']-1;
+                    $expense['recurring']=true;
                
                 
                     $expense=$expense->toArray();
@@ -236,17 +241,25 @@ public function recurring(){
                     // $recurring[]=$expense;
                     $expenseR = $this->Expenses->newEntity();
                     $expenseR = $this->Expenses->patchEntity($expenseR, $expense);
+
+                    
+
                     if($this->Expenses->save($expenseR)){
+
                      //   $this->Flash->success(__('The expense has been saved.'));
                 
                     }
                     else{
                     $this->Flash->success(__('The expense hasnt been saved.'));
                     }
+                    
+
                 }
+                
             }
             
         }
+        
         
         
         return $this->redirect(['action' => 'index']);
