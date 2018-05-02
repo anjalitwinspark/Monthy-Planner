@@ -23,6 +23,7 @@
                     <div class="ibox-title">
                         <h5>Expense Chart <small></small></h5>
                         <div class="ibox-tools">
+                            <span class="label label-warning ">Yearly</span>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -32,13 +33,9 @@
                     <div class="ibox-content">
                             <div class="flot-chart">
                                 <div class="flot-chart-content" id="flot-bar-chart" style="padding: 0px; position: relative;">
-                                    <canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 456px; height: 200px;" width="456" height="200"></canvas>
-                                    <div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-                                        <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-                                            
-                                        </div>
-                                    </div>
+                                    
                                 </div>
+                                
                             </div>
                     </div>
                 </div>
@@ -47,8 +44,10 @@
                 <div class="col-lg-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
+
                         <h5>Expense Line Chart</h5>
                         <div class="ibox-tools">
+                            <span class="label label-warning ">Monthly</span>
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -241,7 +240,7 @@
 
                                     <div><?= $this->Text->autoParagraph(h($expense->description)); ?>
                                     </div>
-                                    <small class="text-muted"><?= h($expense->created) ?>
+                                    <small class="text-muted"><?= h($expense->date) ?>
                                     </small>
                                 </div>
                                 <?php endforeach; ?>
