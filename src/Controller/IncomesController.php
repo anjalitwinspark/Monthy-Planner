@@ -48,17 +48,21 @@ class IncomesController extends AppController
             'contain' => ['Users', 'IncomeFields']
         ];
         $incomes = $this->paginate($this->Incomes);
+        return $this->redirect(['controller'=>'Expenses','action' => 'index']);
 
         $this->set(compact('incomes'));
         $this->set('coordinatesI',$coordinatesI);
     }
 
-
+    
     public function isAuthorized($user){
+        
+        
         
        return true;
     
     }
+
 
     /**
      * View method

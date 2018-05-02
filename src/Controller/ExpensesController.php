@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Collection\Collection;
+use Cake\I18\Time;
+use Cake\ORM\Table;
 
 /**
  * Expenses Controller
@@ -24,8 +26,8 @@ class ExpensesController extends AppController
         $this->loadModel('Incomes');
         $this->loadModel('Expenses');
         $this->loadModel('Reminders');
-       
-        
+        $name=$this->Auth->user('name');
+
 
         $this->paginate = [
             'contain' => ['Users', 'ExpenseFields']
@@ -36,6 +38,8 @@ class ExpensesController extends AppController
         ->order(['Expenses.date' => 'DESC'])
         );
         //pr($expenses);die;
+
+
 
         $incomes =$this->Incomes
         ->find()
@@ -86,9 +90,11 @@ class ExpensesController extends AppController
             return [$key,$value];
         });
         $coordinates=$coordinates->toList();
+        //pr($coordinates);
         $this->set('coordinates',$coordinates);
 
     }
+
 
         
 
@@ -126,6 +132,31 @@ class ExpensesController extends AppController
         $this->set('coordinatesDay',$coordinatesDay);
 
         }
+
+        
+
+
+        if($incomes){
+        $collection = new Collection($incomes);
+        $newCollection = $collection->map(function($value, $key){
+     
+            return  ['month' => $value->created->month, 'value' => $value->value];   
+        });
+
+        $new=$newCollection->groupBy('month')->map(function($value, $key){
+            $value1 = (new Collection($value))->reduce(function($accumulated, $line){
+                return $accumulated + $line['value'];
+            },0);
+            return $value1;
+        });
+        $coordinatesIncome=$new->map(function($value, $key){
+            return [$key,$value];
+        });
+        $coordinatesIncome=$coordinatesIncome->toList();
+        //pr($coordinatesIncome);die;
+        $this->set('coordinatesIncome',$coordinatesIncome);
+
+        }
         
         
 
@@ -156,49 +187,50 @@ class ExpensesController extends AppController
         $this->set('monthlyIncome',$monthlyIncome);
         $this->set('monthlyExpense',$monthlyExpense);
         $this->set('totalExpense',$totalExpense);
+        $this->set('name',$name);
         
        
     }
 
-    public function recurring(){
-        $expenses = $this->Expenses
-        ->find()
-        ->where(['user_id ' => $this->Auth->user('id')])
-        ->where(['recurring'=>true])
-        ->order(['Expenses.created' => 'DESC'])
-        ->all()
-        ;
-        //pr($expenses);die;
-        foreach($expenses as $expense){
-            if($expense['date']->wasWithinLast('1 month')){
-                if($expense->recurring && $expense['recurring_duration']!=0){
-                $expense['date'] = $expense['date']->addMonth();
-                $expense['recurring_duration'] = $expense['recurring_duration']-1;
+    // public function recurring(){
+    //     $expenses = $this->Expenses
+    //     ->find()
+    //     ->where(['user_id ' => $this->Auth->user('id')])
+    //     ->where(['recurring'=>true])
+    //     ->order(['Expenses.created' => 'DESC'])
+    //     ->all()
+    //     ;
+    //     //pr($expenses);die;
+    //     foreach($expenses as $expense){
+    //         if($expense['date']->wasWithinLast('1 month')){
+    //             if($expense->recurring && $expense['recurring_duration']!=0){
+    //             $expense['date'] = $expense['date']->addMonth();
+    //             $expense['recurring_duration'] = $expense['recurring_duration']-1;
 
             
-            //$expense['date'] = $expense['date']->addMonth();
+    //         //$expense['date'] = $expense['date']->addMonth();
         
-                $expense = $expense->toArray();
-                // pr($expense);die;
-                //pr($expenses);die;
-                $expenseR = $this->Expenses->newEntity();
-                $expenseR =  $this->Expenses->patchEntity($expenseR, $expense);
-                if ($this->Expenses->save($expenseR)) {
-                    $this->Flash->success(__('The expense has been saved.'));
+    //             $expense = $expense->toArray();
+    //             // pr($expense);die;
+    //             //pr($expenses);die;
+    //             $expenseR = $this->Expenses->newEntity();
+    //             $expenseR =  $this->Expenses->patchEntity($expenseR, $expense);
+    //             if ($this->Expenses->save($expenseR)) {
+    //                 $this->Flash->success(__('The expense has been saved.'));
 
                 
-                }
-                else{
-                    $this->Flash->error(__('The expense could not be saved. Please, try again.'));
-                }
+    //             }
+    //             else{
+    //                 $this->Flash->error(__('The expense could not be saved. Please, try again.'));
+    //             }
         
         
-        //$recurringExpenses = [];
-                }
-            } 
-        }
-      return $this->redirect(['action' => 'index']); 
-    }
+    //     //$recurringExpenses = [];
+    //             }
+    //         } 
+    //     }
+    //   return $this->redirect(['action' => 'index']); 
+    // }
 
     public function check(){
         $this->loadModel('Reminders');
@@ -221,6 +253,61 @@ class ExpensesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+
+public function recurring(){
+     
+    
+        $expenses =$this->Expenses
+        ->find()
+        //->contain('Users', 'ExpenseFields')
+        ->where(['user_id ' => $this->Auth->user('id')])
+        ->order(['Expenses.created' => 'DESC'])
+        ->all();
+       
+        //$recurring=[];
+        //pr($expenses);die;
+        foreach ($expenses as $expense) {
+            # code...
+            if($expense['date']->wasWithinLast('1 month')){
+                if($expense->recurring&&$expense['recurring_duration']!=0){
+
+                    $updateExpense=$expense;
+                    $updateExpense->recurring=false;
+                    $this->Expenses->save($updateExpense);
+                    
+                    $expense['date']=$expense['date']->addMonth(1);
+                    $expense['recurring_duration']=$expense['recurring_duration']-1;
+                    $expense['recurring']=true;
+               
+                
+                    $expense=$expense->toArray();
+
+                    // $recurring[]=$expense;
+                    $expenseR = $this->Expenses->newEntity();
+                    $expenseR = $this->Expenses->patchEntity($expenseR, $expense);
+
+                    
+
+                    if($this->Expenses->save($expenseR)){
+
+                     //   $this->Flash->success(__('The expense has been saved.'));
+                
+                    }
+                    else{
+                    $this->Flash->success(__('The expense hasnt been saved.'));
+                    }
+                    
+
+                }
+                
+            }
+            
+        }
+        
+        
+        
+        return $this->redirect(['action' => 'index']);
+}
     /**
      * View method
      *

@@ -18,6 +18,13 @@ $cakeDescription = 'Budget-Planner';
 <!DOCTYPE html>
 <html>
 <head>
+    <style type="text/css">
+.gray-bg {
+  background-image: url("http://localhost/budget-planner/img/b2.jpg"); no-repeat;
+  background-size: cover;
+
+}
+</style>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -191,7 +198,6 @@ $(function() {
     $.plot($("#flot-line-chart"), [barData], barOptions);
 
 });
-
 
         </script>
         
