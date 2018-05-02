@@ -254,60 +254,6 @@ class ExpensesController extends AppController
     }
 
 
-public function recurring(){
-     
-    
-        $expenses =$this->Expenses
-        ->find()
-        //->contain('Users', 'ExpenseFields')
-        ->where(['user_id ' => $this->Auth->user('id')])
-        ->order(['Expenses.created' => 'DESC'])
-        ->all();
-       
-        //$recurring=[];
-        //pr($expenses);die;
-        foreach ($expenses as $expense) {
-            # code...
-            if($expense['date']->wasWithinLast('1 month')){
-                if($expense->recurring&&$expense['recurring_duration']!=0){
-
-                    $updateExpense=$expense;
-                    $updateExpense->recurring=false;
-                    $this->Expenses->save($updateExpense);
-                    
-                    $expense['date']=$expense['date']->addMonth(1);
-                    $expense['recurring_duration']=$expense['recurring_duration']-1;
-                    $expense['recurring']=true;
-               
-                
-                    $expense=$expense->toArray();
-
-                    // $recurring[]=$expense;
-                    $expenseR = $this->Expenses->newEntity();
-                    $expenseR = $this->Expenses->patchEntity($expenseR, $expense);
-
-                    
-
-                    if($this->Expenses->save($expenseR)){
-
-                     //   $this->Flash->success(__('The expense has been saved.'));
-                
-                    }
-                    else{
-                    $this->Flash->success(__('The expense hasnt been saved.'));
-                    }
-                    
-
-                }
-                
-            }
-            
-        }
-        
-        
-        
-        return $this->redirect(['action' => 'index']);
-}
     /**
      * View method
      *
