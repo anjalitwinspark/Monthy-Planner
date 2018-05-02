@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class AddValueToIncomes extends AbstractMigration
+class AddDateToExpenses extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,10 +12,9 @@ class AddValueToIncomes extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('incomes');
-        $table->addColumn('value', 'integer', [
+        $table = $this->table('expenses');
+        $table->addColumn('date', 'date', [
             'default' => null,
-            'limit' => 11,
             'null' => false,
         ]);
         $table->update();

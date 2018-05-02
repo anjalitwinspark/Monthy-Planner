@@ -117,12 +117,11 @@
                     </div>
                 </div>
             </div>
+ </div>
+
 </div>
 
 </div>
-</div>
-
-
 <script>
 var count = 1;
 function add_fields() {
