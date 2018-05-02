@@ -3,6 +3,9 @@
 
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
             <ul class="nav navbar-top-links navbar-right " style="display: inline-flex;">
+                <li>
+                    <label class="text-info"><?= h($name)?></label>
+                </li>
                 <li class="dropdown open">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
                         <i class="fa fa-bell"></i>  <span class="label label-primary"><?= h($i)?></span>
@@ -21,8 +24,8 @@
                             </a>
                         </li>
                         
-                    <?php endforeach; ?>
-                <?php endif?>
+                        <?php endforeach; ?>
+                        <?php endif?>
                         
                     </ul>
                     
