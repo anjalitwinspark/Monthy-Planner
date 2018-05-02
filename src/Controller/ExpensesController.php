@@ -33,8 +33,9 @@ class ExpensesController extends AppController
         $expenses = $this->paginate($this->Expenses
         ->find()
         ->where(['user_id ' => $this->Auth->user('id')])
-        ->order(['Expenses.created' => 'DESC'])
+        ->order(['Expenses.date' => 'DESC'])
         );
+        //pr($expenses);die;
 
         $incomes =$this->Incomes
         ->find()
@@ -100,6 +101,7 @@ class ExpensesController extends AppController
             }
             
         }
+//pr($currentExpenses);die;
 
         if($currentExpenses){
         $collection = new Collection($currentExpenses);
@@ -107,18 +109,20 @@ class ExpensesController extends AppController
      
             return  ['day' => $value->date->day, 'value' => $value->value];   
         });
-
+        //$newCollection = $newCollection->sortBy('value',SORT_ASC);
+        //pr($newCollection->toList());die;
         $new=$newCollection->groupBy('day')->map(function($value, $key){
             $value1 = (new Collection($value))->reduce(function($accumulated, $line){
                 return $accumulated + $line['value'];
             },0);
             return $value1;
         });
+        //pr($new->toList());die;
         $coordinatesDay=$new->map(function($value, $key){
             return [$key,$value];
         });
         $coordinatesDay=$coordinatesDay->toList();
-        //pr($coordinatesDay);die;
+            //pr($coordinatesDay);die;
         $this->set('coordinatesDay',$coordinatesDay);
 
         }
@@ -154,6 +158,46 @@ class ExpensesController extends AppController
         $this->set('totalExpense',$totalExpense);
         
        
+    }
+
+    public function recurring(){
+        $expenses = $this->Expenses
+        ->find()
+        ->where(['user_id ' => $this->Auth->user('id')])
+        ->where(['recurring'=>true])
+        ->order(['Expenses.created' => 'DESC'])
+        ->all()
+        ;
+        //pr($expenses);die;
+        foreach($expenses as $expense){
+            if($expense['date']->wasWithinLast('1 month')){
+                if($expense->recurring && $expense['recurring_duration']!=0){
+                $expense['date'] = $expense['date']->addMonth();
+                $expense['recurring_duration'] = $expense['recurring_duration']-1;
+
+            
+            //$expense['date'] = $expense['date']->addMonth();
+        
+                $expense = $expense->toArray();
+                // pr($expense);die;
+                //pr($expenses);die;
+                $expenseR = $this->Expenses->newEntity();
+                $expenseR =  $this->Expenses->patchEntity($expenseR, $expense);
+                if ($this->Expenses->save($expenseR)) {
+                    $this->Flash->success(__('The expense has been saved.'));
+
+                
+                }
+                else{
+                    $this->Flash->error(__('The expense could not be saved. Please, try again.'));
+                }
+        
+        
+        //$recurringExpenses = [];
+                }
+            } 
+        }
+      return $this->redirect(['action' => 'index']); 
     }
 
     public function check(){
@@ -202,13 +246,13 @@ class ExpensesController extends AppController
     {
         $expense = $this->Expenses->newEntity();
         $expense['user_id']=$this->Auth->user('id');
-        
-
+        $expense['recurring_duration'] = 0;
 
 
         if ($this->request->is('post')) {
             $expense['recurring_duration']=1;
             $expense = $this->Expenses->patchEntity($expense, $this->request->getData());
+        //pr($expense);die;
             
             
             if ($this->Expenses->save($expense)) {

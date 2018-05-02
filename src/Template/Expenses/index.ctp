@@ -70,8 +70,23 @@
             
 
             <div class="row">
+            <div class="col-lg-3">
+                <div class="widget red-bg no-padding">
+                    <div class="p-m">
+                        <h1 class="m-xs">$ <?= $monthlyExpense; ?></h1>
 
-                <div class="col-lg-3">
+                        <h3 class="font-bold no-margins">
+                            Monthly Expense
+                        </h3>
+                        <small>Total expense: <strong><?= $totalExpense; ?></strong></small>
+                    </div>
+                    <div class="flot-chart">
+                        <div class="flot-chart-content" id="flot-chart2" style="padding: 0px; position: relative;"><canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 233px; height: 100px;" width="233" height="100"></canvas><canvas class="flot-overlay" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 233px; height: 100px;" width="233" height="100"></canvas></div>
+                    </div>
+                </div>
+             </div>
+
+                <!-- <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <span class="label label-success pull-right">Monthly</span>
@@ -86,8 +101,24 @@
                                 <small>Total expense: <strong><?= $totalExpense; ?></strong></small>
                             </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-lg-3">
+                <div class="widget lazur-bg no-padding">
+                    <div class="p-m">
+                        <h1 class="m-xs">$ <?= $monthlyIncome[0]->sum; ?></h1>
+
+                        <h3 class="font-bold no-margins">
+                            Monthly Income
+                        </h3>
+                        <small></small>
+                    </div>
+                    <div class="flot-chart">
+                        <div class="flot-chart-content" id="flot-chart2" style="padding: 0px; position: relative;"><canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 233px; height: 100px;" width="233" height="100"></canvas><canvas class="flot-overlay" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 233px; height: 100px;" width="233" height="100"></canvas></div>
+                    </div>
+                </div>
+             </div>
+
+                <!-- <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <span class="label label-success pull-right">Monthly</span>
@@ -103,8 +134,25 @@
                             </div>
                     </div>
                     
-                </div>
+                </div> -->
                 <div class="col-lg-3">
+                <div class="widget lazur-bg no-padding">
+                    <div class="p-m">
+                        
+                    <h1 class="m-xs">$ <?= ($monthlyIncome[0]->sum)*12; ?></h1>
+                        <h3 class="font-bold no-margins">
+                            Annual Income
+                        </h3>
+                        <!-- <h1 class="no-margins">$ <?= ($monthlyIncome[0]->sum)*12; ?></h1> -->
+                        <!-- <small>Total expense: <strong><?= $totalExpense; ?></strong></small> -->
+                    </div>
+                    <div class="flot-chart">
+                        <div class="flot-chart-content" id="flot-chart2" style="padding: 0px; position: relative;"><canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 233px; height: 100px;" width="233" height="100"></canvas><canvas class="flot-overlay" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 233px; height: 100px;" width="233" height="100"></canvas></div>
+                    </div>
+                </div>
+             </div>
+
+                <!-- <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <span class="label label-warning pull-right">Annual</span>
@@ -116,10 +164,10 @@
                                 <small></small>
                             </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-lg-3">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
+                    <div class="ibox float-e-margins yellow-bg">
+                        <div class="ibox-title navy-bg">
                             <h5>Reminder</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
@@ -128,7 +176,7 @@
                                 
                             </div>
                         </div>
-                        <div class="ibox-content">
+                        <div class="ibox-content yellow-bg">
                             <div class="text-center">
                             <a data-toggle="modal" class="btn btn-primary" href="#modal-form"><i class="fa fa-bell"></i> ADD REMINDER </a>
 
@@ -241,7 +289,7 @@
 
                                     <div><?= $this->Text->autoParagraph(h($expense->description)); ?>
                                     </div>
-                                    <small class="text-muted"><?= h($expense->created) ?>
+                                    <small class="text-muted"><?= h($expense->date) ?>
                                     </small>
                                 </div>
                                 <?php endforeach; ?>

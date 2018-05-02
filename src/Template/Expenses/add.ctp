@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
 
-                            <!--    <div class="form-group" id="data_4">
+                               <!-- <div class="form-group" id="data_4">
                                 <label class="font-noraml col-sm-2 control-label">Month select</label>
                                 <div class="input-group date col-sm-10">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input class="form-control" value="07/01/2014" type="text">

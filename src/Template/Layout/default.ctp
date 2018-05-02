@@ -23,11 +23,6 @@ $cakeDescription = 'Budget-Planner';
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
-        
-     <!-- <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">  -->
 
     </title>
     <?= $this->Html->meta('icon') ?>
@@ -151,6 +146,7 @@ $(function() {
 
 
 
+
 });
 $(function() {
     var barOptions = {
@@ -166,7 +162,8 @@ $(function() {
                         opacity: 0.0
                     }]
                 }
-            }
+            },
+            points: { show: true }
         },
         xaxis: {
             tickDecimals: 0
@@ -194,6 +191,8 @@ $(function() {
     $.plot($("#flot-line-chart"), [barData], barOptions);
 
 });
+
+
         </script>
         
 
