@@ -322,6 +322,7 @@
                                             <i class="fa fa-times"></i>
                                             </a>-->
                                         </div>
+                                        
                             </div>
                         <div class="ibox-content">
     
