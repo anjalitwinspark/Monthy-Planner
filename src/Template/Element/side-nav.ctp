@@ -15,10 +15,8 @@
                     
                             
                     <li><?= $this->Html->link(__('Add Expenses'), ['controller'=>'Expenses','action' => 'add']) ?></li>
-                        <li><?= $this->Html->link(__('Add Income'), ['controller'=>'Incomes','action' => 'add']) ?></li>
-                    
-                    
+                    <li><?= $this->Html->link(__('Add Income'), ['controller'=>'Incomes','action' => 'add']) ?></li>
                 </ul>
-
             </div>
-        </nav>
+</nav>
+

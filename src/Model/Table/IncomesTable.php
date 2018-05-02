@@ -49,6 +49,11 @@ class IncomesTable extends Table
             'foreignKey' => 'income_field_id',
             'joinType' => 'INNER'
         ]);
+        //  $this->hasMany('Incomes', [
+        //     'foreignKey' => 'income_field_id',
+        //     'dependent' => true,
+        //     'cascadeCallbacks' => true
+        // ]);
     }
 
     /**

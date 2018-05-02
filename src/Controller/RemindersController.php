@@ -26,13 +26,8 @@ class RemindersController extends AppController
         $reminders = $this->paginate($this->Reminders);
 
         $this->set(compact('reminders'));
-
-        
-        
-        
     }
 
-    
     /**
      * View method
      *
@@ -57,6 +52,7 @@ class RemindersController extends AppController
     public function add()
     {
         $reminder = $this->Reminders->newEntity();
+
         $reminder['user_id']=$this->Auth->user('id');
         if ($this->request->is('post')) {
             $reminder = $this->Reminders->patchEntity($reminder, $this->request->getData());
@@ -64,6 +60,7 @@ class RemindersController extends AppController
                 $this->Flash->success(__('The reminder has been saved.'));
 
                 return $this->redirect(['controller'=>'Expenses','action' => 'index']);
+
             }
             $this->Flash->error(__('The reminder could not be saved. Please, try again.'));
         }
@@ -112,6 +109,7 @@ class RemindersController extends AppController
         } else {
             $this->Flash->error(__('The reminder could not be deleted. Please, try again.'));
         }
+
 
         return $this->redirect(['controller'=>'Expenses','action' => 'index']);
     }

@@ -91,7 +91,7 @@
                         <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
                 </div>
             -->
-                <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+                <button type="submit" class="btn btn-primary block full-width m-b">Register</button>    
 
                 <p class="text-muted text-center"><small>Already have an account?</small></p>
             

@@ -20,6 +20,7 @@
                                 <div class="alert alert-warning">
                                     <i class="fa fa-bell fa-fw"></i> <?= h($z->description)?>
                                     <span class="pull-right text-muted small"></span>
+
                                 </div>
                             </a>
                         </li>
@@ -39,8 +40,10 @@
 
      
             </ul>
+
         </nav>
     
 
 
 </div>
+
