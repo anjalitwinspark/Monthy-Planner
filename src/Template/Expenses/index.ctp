@@ -312,8 +312,9 @@
                             <div class="ibox-title">
                                         
                                         <div class="ibox-tools">
-                                            <span class="label label-danger">
-                                            <h5>Reminder</h5></span>
+                                            <span class="label label-danger ">
+                                                
+                                            <h5 >Reminder</h5></span>
                                             <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                             </a>
@@ -321,6 +322,13 @@
                                             <i class="fa fa-times"></i>
                                             </a>-->
                                         </div>
+                                        <!-- <div class="widget yellow-bg p-lg text-center">
+                        <div class="m-b-md">
+                            <i class="fa fa-warning fa-4x"></i>
+                            <h1 class="m-xs">Reminder</h1>
+                            
+                        </div>
+                    </div> -->
                             </div>
                         <div class="ibox-content">
     
