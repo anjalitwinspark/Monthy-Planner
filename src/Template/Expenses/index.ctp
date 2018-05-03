@@ -15,7 +15,7 @@
 
         <?= $this->element('top-nav') ?>
 
-        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="wrapper wrapper-content animated fadeInRight" style="background-image: url('');">
 
             <div class="row">
                 <div class="col-lg-6">
@@ -225,9 +225,9 @@
                                 <?php foreach ($expenses as $expense): ?>
                                 <div class="feed-element ">
                                     <large class="pull-right text-navy">
-                                        <?= $this->Html->link(__('View'), ['controller'=>'Expenses','action' => 'view', $expense->id]) ?>
-                                        <?= $this->Html->link(__('Edit'), ['controller'=>'Expenses','action' => 'edit', $expense->id]) ?>
-                                        <?= $this->Form->postLink(__('Delete'), ['controller'=>'Expenses','action' => 'delete', $expense->id], ['confirm' => __('Are you sure you want to delete # {0}?', $expense->id)]) ?>
+                                        <?= $this->Html->link(__(''), ['controller'=>'Expenses','action' => 'view', $expense->id],['class'=>'fa fa-eye fa-lg']) ?>
+                                        <?= $this->Html->link(__(''), ['controller'=>'Expenses','action' => 'edit', $expense->id],['class'=>'fa fa-edit fa-lg']) ?>
+                                        <?= $this->Form->postLink(__(''), ['controller'=>'Expenses','action' => 'delete', $expense->id],['class'=>'fa fa-times fa-lg'], ['confirm' => __('Are you sure you want to delete # {0}?', $expense->id)]) ?>
                                     </large>
                                
 
@@ -285,10 +285,10 @@
                                                    
                                                    
                                                         <small class="pull-right">
-                                                            <?= $this->Html->link(__('View'), ['controller'=>'Incomes','action' => 'view', $income->id]) ?>
-                                                            <?= $this->Html->link(__('Edit'), ['controller'=>'Incomes','action' => 'edit', $income->id]) ?>
+                                                            <?= $this->Html->link(__(''), ['controller'=>'Incomes','action' => 'view', $income->id],['class'=>'fa fa-eye fa-lg']) ?>
+                                                            <?= $this->Html->link(__(''), ['controller'=>'Incomes','action' => 'edit', $income->id],['class'=>'fa fa-edit fa-lg']) ?>
                    
-                                                            <?= $this->Form->postLink(__('Delete'), ['controller'=>'Incomes','action' => 'delete', $income->id], ['confirm' => __('Are you sure you want to delete # {0}?', $income->id)]) ?>
+                                                            <?= $this->Form->postLink(__(''), ['controller'=>'Incomes','action' => 'delete', $income->id],['class'=>'fa fa-times fa-lg'], ['confirm' => __('Are you sure you want to delete # {0}?', $income->id)]) ?>
                                                         </small>
 
                                                         <strong><?= $income->income_field->name ?></strong> <?= h($income->value)?> <br>
@@ -342,11 +342,11 @@
                                                         <!--    <i class="fa fa-eye">
                                                             <?= $this->Html->link(__('View'), ['controller'=>'Reminders','action' => 'view', $reminder->id]) ?>
                                                         </i>-->
-                                                            <i class="fa fa-edit">
-                                                            <?= $this->Html->link(__('Edit'), ['controller'=>'Reminders','action' => 'edit', $reminder->id]) ?>
-                                                            </i>
+                                                            
+                                                            <?= $this->Html->link(__(''), ['controller'=>'Reminders','action' => 'edit', $reminder->id],['class'=>'fa fa-edit fa-lg btn btn-default']) ?>
+                                                           
                    
-                                                            <?= $this->Form->postButton('<i class="fa fa-times"></i>', ['controller'=>'Reminders','action' => 'delete', $reminder->id], ['confirm' => __('Are you sure you want to delete # {0}?', $reminder->id)]) ?>
+                                                            <?= $this->Form->postLink('', ['controller'=>'Reminders','action' => 'delete', $reminder->id],['class'=>'fa fa-times btn btn-danger btn-sm'], ['confirm' => __('Are you sure you want to delete # {0}?', $reminder->id)]) ?>
                                                         </small>
 
                                                         <strong><?= $reminder->description ?></strong> 

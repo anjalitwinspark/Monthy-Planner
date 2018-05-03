@@ -19,7 +19,7 @@
     <fieldset>
         <legend><?= __('Edit Expense') ?></legend>
         <?php
-            echo $this->Form->control('user_id', ['options' => $users]);
+            //echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('expense_field_id', ['options' => $expenseFields]);
             echo $this->Form->control('value');
             echo $this->Form->control('description');

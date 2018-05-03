@@ -40,7 +40,8 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-
+        $this->loadModel('Expenses');
+        $this->loadModel('Reminders');
         
         $this->loadComponent('Flash');
         $this->loadComponent('RequestHandler', [
@@ -77,7 +78,38 @@ class AppController extends Controller
         $loggedInUser=$this->Auth->user();
        // pr($loggedInUser);die;
          
+
         $this->set('loggedInUser',$loggedInUser);
+
+
+        $reminders =$this->Reminders
+        ->find()
+        ->contain('Expenses')
+        ->where(['Reminders.user_id ' => $this->Auth->user('id')])
+        ->order(['Reminders.created' => 'DESC'])
+        ->all()
+        ;
+        //reminder
+        $reminderToday=[];
+        $i=0;
+        if($reminders){
+            foreach ($reminders as $reminder) {
+            $time =$reminder->date;
+        
+            if ($time->isToday()) {
+                $reminderToday[]=$reminder;
+                $i=$i+1;
+
+                }
+           
+            }
+            $this->set('i',$i);
+            $this->set('reminderToday',$reminderToday);
+        }
+
+
+        
+        
     }
 
 
