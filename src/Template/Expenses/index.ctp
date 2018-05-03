@@ -59,7 +59,7 @@
                         <div class="flot-chart">
                             <div class="flot-chart-content" id="flot-line-chart" style="padding: 0px; position: relative;">
                                
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
