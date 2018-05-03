@@ -24,11 +24,6 @@ $cakeDescription = 'Budget-Planner';
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
-        
-     <!-- <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">  -->
 
     </title>
     <?= $this->Html->meta('icon') ?>
@@ -108,46 +103,47 @@ $cakeDescription = 'Budget-Planner';
             });
             });
             //Flot Bar Chart
-$(function() {
-    var barOptions = {
-        series: {
-            bars: {
-                show: true,
-                barWidth: 0.6,
-                fill: true,
-                fillColor: {
-                    colors: [{
-                        opacity: 0.8
-                    }, {
-                        opacity: 0.8
-                    }]
+        $(function() {
+            var barOptions = {
+                series: {
+                    bars: {
+                        show: true,
+                        barWidth: 0.6,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.8
+                            }, {
+                                opacity: 0.8
+                            }]
+                        }
+                    }
+                },
+                xaxis: {
+                    tickDecimals: 0
+                },
+                colors: ["#1ab394"],
+                grid: {
+                    color: "#999999",
+                    hoverable: true,
+                    clickable: true,
+                    tickColor: "#D4D4D4",
+                    borderWidth:0
+                },
+                legend: {
+                    show: false
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    content: "x: %x, y: %y"
                 }
-            }
-        },
-        xaxis: {
-            tickDecimals: 0
-        },
-        colors: ["#1ab394"],
-        grid: {
-            color: "#999999",
-            hoverable: true,
-            clickable: true,
-            tickColor: "#D4D4D4",
-            borderWidth:0
-        },
-        legend: {
-            show: false
-        },
-        tooltip: true,
-        tooltipOpts: {
-            content: "x: %x, y: %y"
-        }
-    };
-    var barData = {
-        label: "bar",
-        data: <?php echo json_encode($coordinates); ?>
-    };
-    $.plot($("#flot-bar-chart"), [barData], barOptions);
+            };
+            var barData = {
+                label: "bar",
+                data: <?php echo json_encode($coordinates); ?>
+            };
+            $.plot($("#flot-bar-chart"), [barData], barOptions);
+
 
 
 
@@ -167,7 +163,8 @@ $(function() {
                         opacity: 0.0
                     }]
                 }
-            }
+            },
+            points: { show: true }
         },
         xaxis: {
             tickDecimals: 0
@@ -195,7 +192,9 @@ $(function() {
     $.plot($("#flot-line-chart"), [barData], barOptions);
 
 });
+
    </script>
+
         
 
 </body>

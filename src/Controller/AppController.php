@@ -75,8 +75,9 @@ class AppController extends Controller
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
         $loggedInUser=$this->Auth->user();
+       // pr($loggedInUser);die;
          
-        $this->set(compact('loggedInUser'));
+        $this->set('loggedInUser',$loggedInUser);
     }
 
 

@@ -4,7 +4,7 @@
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
             <ul class="nav navbar-top-links navbar-right " style="display: inline-flex;">
                 <li>
-                    <label class="text-info"><?= h($name)?></label>
+                    <label class="text-info"><?php echo $loggedInUser['name'];?></label>
                 </li>
                 <li class="dropdown open">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">

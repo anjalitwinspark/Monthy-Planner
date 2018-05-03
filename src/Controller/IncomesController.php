@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Collection\Collection;
 /**
  * Incomes Controller
  *
@@ -20,6 +20,30 @@ class IncomesController extends AppController
      */
     public function index()
     {
+        $this->loadModel('Expenses');
+        $expense = $this->Expenses->find()->all();
+        //pr($expense);die;
+        $Collection = new Collection($expense);
+        //pr($expenseCollec->toArray());
+        $newCollection=$Collection->map(function($value, $key){
+            //pr($value);die;
+            return ['month'=> $value->date->month, 'value'=>$value->value];
+            });
+        //pr($newCollection->toArray());die;
+        $new = $newCollection->groupBy('month')->map(function($value, $key){
+           
+            $val = (new Collection($value))->reduce(function($accumulated, $line){
+                return $accumulated + $line['value'];
+            },0);
+            return $val;
+        });
+        //pr($new->toArray());  die;
+        $coordinatesI = $new->map(function($key, $value){
+            return [$key,$value];
+        });
+         //pr($coordinates->toList());die;  
+         $coordinatesI = $coordinatesI->toList(); 
+        //pr($new->toList());die;
         $this->paginate = [
             'contain' => ['Users', 'IncomeFields']
         ];
@@ -27,8 +51,9 @@ class IncomesController extends AppController
         return $this->redirect(['controller'=>'Expenses','action' => 'index']);
 
         $this->set(compact('incomes'));
+        $this->set('coordinatesI',$coordinatesI);
     }
-  
+
     
     public function isAuthorized($user){
         
@@ -169,4 +194,6 @@ class IncomesController extends AppController
 
         return $this->redirect(['controller'=>'Expenses','action' => 'index']);
     }
+
+
 }
