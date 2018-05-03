@@ -4,20 +4,17 @@
  * @var \App\Model\Entity\Reminder $reminder
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $reminder->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $reminder->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Reminders'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Expenses'), ['controller' => 'Expenses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Expense'), ['controller' => 'Expenses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
+<div id="wrapper">
+
+    <?= $this->element('side-nav') ?>
+
+    
+        <div id="page-wrapper" class="gray-bg dashbard-1" >
+
+        <?= $this->element('top-nav') ?>
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+
 <div class="reminders form large-9 medium-8 columns content">
     <?= $this->Form->create($reminder) ?>
     <fieldset>
@@ -31,4 +28,7 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+</div>
+</div>
+</div>
 </div>
