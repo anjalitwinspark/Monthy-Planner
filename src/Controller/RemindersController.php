@@ -85,7 +85,7 @@ class RemindersController extends AppController
             if ($this->Reminders->save($reminder)) {
                 $this->Flash->success(__('The reminder has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller'=>'Expenses','action' => 'index']);
             }
             $this->Flash->error(__('The reminder could not be saved. Please, try again.'));
         }
